@@ -1,0 +1,61 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        body{background-color: aquamarine;}
+        #app{
+            width: 600px;
+            margin: 50px auto;
+
+        }
+        .newTask{
+            padding: 10px 0;
+        }
+        .newTask input{
+            width: 600px;
+            height: 50px;
+        }
+        .todos *{
+            padding: 6px;
+        }
+        button{
+            background-color: none;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            padding: 0;
+        }
+        button:hover{
+            background: #ccc;
+            border: none;
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="newTask">
+            <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="请输入代办事件" >
+        </div>
+        <ol class="todos">
+            <li v-for="todo in todoList">
+                <input type="checkbox" v-model="todo.done">
+                {{ todo.title }}
+                <span v-if="todo.done" style="text-decoration: line-through;color: red;">已完成</span>
+                <span v-else>未完成</span>
+                <span>创建时间:</span>{{todo.createdAt}}
+                <button @click="removeTodo(todo)">删除</button>
+            </li>
+
+        </ol>
+    </div>
+
+
+<script src="bundle.js"></script>
+</body>
+</html>
