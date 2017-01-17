@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff03ac16-de99-42cc-bf92-d2d8200d58b2" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/任务3/README.md" afterPath="$PROJECT_DIR$/任务3/README.md" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -43,6 +43,7 @@
         <option value="$PROJECT_DIR$/任务2-vue/README.md" />
         <option value="$PROJECT_DIR$/任务3/app.js" />
         <option value="$PROJECT_DIR$/任务3/page.html" />
+        <option value="$PROJECT_DIR$/任务3/README.md" />
       </list>
     </option>
   </component>
@@ -200,12 +201,12 @@
       <updated>1484118835433</updated>
       <workItem from="1484118836878" duration="2220000" />
       <workItem from="1484657421389" duration="7000" />
-      <workItem from="1484658226868" duration="9882000" />
+      <workItem from="1484658226868" duration="10061000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12109000" />
+    <option name="totallyTimeSpent" value="12288000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="307" y="110" width="874" height="530" extended-state="0" />
@@ -287,14 +288,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/任务3/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/任务3/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -344,6 +337,14 @@
           <folding>
             <element signature="n#style#0;n#span#0;n#li#0;n#ol#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/任务3/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
