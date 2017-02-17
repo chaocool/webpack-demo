@@ -24910,14 +24910,14 @@ var app = new _vue2.default({
     el: '#app',
     data: {
         //message: ' Hello World , this is Jack !'
-        newTodo: '',
-        todoList: [],
-        currentUser: null,
         actionType: 'signUp',
         formData: {
             username: '',
             password: ''
-        }
+        },
+        newTodo: '',
+        todoList: [],
+        currentUser: null
     },
     created: function created() {
         var _this = this;
@@ -24930,6 +24930,8 @@ var app = new _vue2.default({
         var oldDataString = window.localStorage.getItem('myTodos');
         var oldData = JSON.parse(oldDataString);
         this.todoList = oldData || [];
+
+        this.currentUser = this.getCurrentUser();
     },
     methods: {
         addTodo: function addTodo() {
@@ -24967,12 +24969,21 @@ var app = new _vue2.default({
             });
         },
         getCurrentUser: function getCurrentUser() {
-            var _AV$User$current = _leancloudStorage2.default.User.current(),
-                id = _AV$User$current.id,
-                createdAt = _AV$User$current.createdAt,
-                username = _AV$User$current.attributes.username;
+            // let {id, createdAt, attributes: {username}} = AV.User.current();
+            // return {id, username, createdAt};
 
-            return { id: id, username: username, createdAt: createdAt };
+            var current = _leancloudStorage2.default.User.current();
+
+            if (current) {
+                var id = current.id,
+                    createdAt = current.createdAt,
+                    username = current.attributes.username;
+
+
+                return { id: id, username: username, createdAt: createdAt };
+            } else {
+                return null;
+            }
         },
         logout: function logout() {
             _leancloudStorage2.default.User.logOut();

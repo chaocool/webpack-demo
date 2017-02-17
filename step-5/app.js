@@ -14,14 +14,14 @@ var app = new Vue({
     el: '#app',
     data: {
         //message: ' Hello World , this is Jack !'
-        newTodo: '',
-        todoList: [],
-        currentUser: null,
         actionType: 'signUp',
         formData: {
-                username: '',
-                password: ''
-        }
+            username: '',
+            password: ''
+        },
+        newTodo: '',
+        todoList: [],
+        currentUser: null
     },
     created: function(){
         window.onbeforeunload = ()=>{
@@ -32,6 +32,8 @@ var app = new Vue({
         let oldDataString = window.localStorage.getItem('myTodos');
         let oldData = JSON.parse(oldDataString);
         this.todoList = oldData || [];
+
+        this.currentUser = this.getCurrentUser();
     },
     methods: {
         addTodo: function () {
@@ -53,20 +55,31 @@ var app = new Vue({
             user.setPassword(this.formData.password);
             user.signUp().then((loginedUser)=>{
                 this.currentUser = this.getCurrentUser()
-            }, (error)=>{
+        }, (error)=>{
                 alert('注册失败')
             });
         },
         login: function(){
+
             AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser)=>{
-                this.currentUser = this.getCurrentUser()
-            }, function(error){
+                this.currentUser = this.getCurrentUser();
+        }, function(error){
                 alert('登陆失败')
             });
         },
         getCurrentUser: function(){
-            let{id, createdAt, attributes: {username}} = AV.User.current();
-            return {id, username, createdAt};
+            // let {id, createdAt, attributes: {username}} = AV.User.current();
+            // return {id, username, createdAt};
+
+            let current = AV.User.current();
+
+            if(current){
+                let {id, createdAt, attributes:{username}} = current;
+
+                return {id, username, createdAt};
+            }else{
+                return null;
+            }
         },
         logout: function(){
             AV.User.logOut();
