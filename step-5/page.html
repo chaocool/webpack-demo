@@ -1,0 +1,97 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        body{background-color: aquamarine;}
+        #app{
+            width: 600px;
+            margin: 50px auto;
+
+        }
+        .newTask{
+            padding: 10px 0;
+        }
+        .newTask input{
+            width: 600px;
+            height: 50px;
+        }
+        .todos *{
+            padding: 6px;
+        }
+        button{
+            background-color: none;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            padding: 0;
+        }
+        button:hover{
+            background: #ccc;
+            border: none;
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <section id="signInAndSignUp" v-if="!currentUser">
+        <div>
+            <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
+            <label><input type="radio" name="type" v-model="actionType" value="login">登入</label>
+        </div>
+        <div class="signUp" v-if="actionType === 'signUp'">
+            <form @submit.prevent="signUp">
+                <div class="formRow">
+                    用户名<input type="text" v-model="formData.username">
+                </div>
+                <div class="formRow">
+                    密码<input type="password" v-model="formData.password">
+                </div>
+                <div class="formActions">
+                    <input type="submit" value="注册">
+                </div>
+            </form>
+        </div>
+        <div class="login" v-if="actionType==='login'">
+            <form @submit.prevent="login">
+                <div class="formRow">
+                    用户名<input type="text" v-model="formData.username">
+                </div>
+                <div class="formRow">
+                    密码<input type="password" v-model="formData.password">
+                </div>
+                <div class="formActions">
+                    <input type="submit" value="登入">
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="todo" v-if="currentUser">
+        欢迎你~用户:<span style="color:red">{{currentUser.username}} </span>
+        <button @click="logout">登出</button>
+        <div class="newTask">
+            <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="请输入待办事项">
+        </div>
+        <ol class="todos">
+            <li v-for="todo in todoList">
+                <input type="checkbox" v-model="todo.done" > {{ todo.title }}
+
+                <span v-if="todo.done">已完成</span>
+                <span v-else>未完成</span>
+
+                <button @click="removeTodo(todo)">删除</button>
+            </li>
+        </ol>
+    </section>
+</div>
+
+
+<script src="bundle.js"></script>
+</body>
+</html>
