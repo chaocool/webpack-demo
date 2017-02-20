@@ -2,6 +2,7 @@
  * Created by young on 2017/1/11.
  */
 module.exports = {
+    watch: true,
     entry: './app.js',
     output: {
         filename: 'bundle.js'

@@ -63,196 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(4);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _leancloudStorage = __webpack_require__(3);
-
-var _leancloudStorage2 = _interopRequireDefault(_leancloudStorage);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import bar from './bar';
-var APP_ID = '0p5CPSv97HgBjDmPRqTkJF5K-gzGzoHsz';
-var APP_KEY = '2PbwM4Qn9tax8D8uxExzPHhH';
-_leancloudStorage2.default.init({
-    appId: APP_ID,
-    appKey: APP_KEY
-});
-
-var app = new _vue2.default({
-    el: '#app',
-    data: {
-        //message: ' Hello World , this is Jack !'
-        actionType: 'signUp',
-        formData: {
-            username: '',
-            password: ''
-        },
-        newTodo: '',
-        todoList: [],
-        currentUser: null
-    },
-    created: function created() {
-        this.currentUser = this.getCurrentUser();
-        this.fetchTodos();
-
-        // window.onbeforeunload = ()=>{
-        //     let dataString = JSON.stringify(this.todoList); // 返回指定值的JSON
-        //     window.localStorage.setItem('myTodos', dataString);
-        //
-        //     var AVTodos = AV.Object.extend('AllTodos'),
-        //         avTodos = new AVTodos();
-        //
-        //     avTodos.set('content', dataString);
-        //     avTodos.save().then(function(todo){
-        //         console.log('保存成功')
-        //     }, function(error){
-        //         console.error('保存失败');
-        //     });
-        //     // debugger;
-        // }
-        //
-        // let oldDataString = window.localStorage.getItem('myTodos');
-        // let oldData = JSON.parse(oldDataString);
-        // this.todoList = oldData || [];
-        //
-        // this.currentUser = this.getCurrentUser();
-    },
-    methods: {
-        fetchTodos: function fetchTodos() {
-            var _this = this;
-
-            if (this.currentUser) {
-                var query = new _leancloudStorage2.default.Query('AllTodos');
-                query.find().then(function (todos) {
-                    var avAllTodos = todos[0]; //因为理论上 AllTodos 只有一个，所以我们取结果的第一项
-                    var id = avAllTodos.id;
-                    _this.todoList = JSON.parse(avAllTodos.attributes.content);
-                    _this.todoList.id = id; // 为什么给 todoList 这个数组设置 id？因为数组也是对象啊
-                }, function (error) {
-                    console.error(error);
-                });
-            }
-        },
-        updateTodos: function updateTodos() {
-            var dataString = JSON.stringify(this.todoList);
-            var avTodos = _leancloudStorage2.default.Object.createWithoutData('AllTodos', this.todoList.id);
-            avTodos.set('content', dataString);
-            avTodos.save().then(function () {
-                console.log('更新成功');
-            });
-        },
-        saveTodos: function saveTodos() {
-            var _this2 = this;
-
-            var dataString = JSON.stringify(this.todoList);
-            var AVTodos = _leancloudStorage2.default.Object.extend('AllTodos');
-            var avTodos = new AVTodos();
-            var acl = new _leancloudStorage2.default.ACL();
-            acl.setReadAccess(_leancloudStorage2.default.User.current(), true); // 只读
-            acl.setWriteAccess(_leancloudStorage2.default.User.current(), true); //只写
-
-
-            avTodos.set('content', dataString);
-            avTodos.setACL(acl); //设置访问控制
-            //avTodos.save().then(function(todo) {
-            avTodos.save().then(function (todo) {
-                _this2.todoList.id = todo.id; // 一定要记得把 id 挂到 this.todoList 上，否则下次就不会调用 updateTodos 了
-                // alert('保存成功');
-                console.log('保存成功');
-            }, function (error) {
-                alert('保存失败');
-            });
-            // })
-        },
-        saveOrUpdateTodos: function saveOrUpdateTodos() {
-            if (this.todoList.id) {
-                this.updateTodos();
-            } else {
-                this.saveTodos();
-            }
-        },
-        addTodo: function addTodo() {
-            this.todoList.push({
-                title: this.newTodo,
-                createdAt: new Date().toDateString(),
-                done: false //添加一个 done 属性
-            });
-            this.newTodo = '';
-            //console.log(this.todoList)
-            this.saveTodos();
-            this.saveOrUpdateTodos(); //不能用 saveTodos 了
-        },
-        removeTodo: function removeTodo(todo) {
-            var idx = this.todoList.indexOf(todo);
-            this.todoList.splice(idx, 1); //splice 删除从 index 开始的X个元素并返回数组,第三个参数可以是替换和添加元素加进来
-            this.saveTodos();
-            this.saveOrUpdateTodos(); // 不能用 saveTodos 了
-        },
-        signUp: function signUp() {
-            var _this3 = this;
-
-            var user = new _leancloudStorage2.default.User();
-            user.setUsername(this.formData.username);
-            user.setPassword(this.formData.password);
-            user.signUp().then(function (loginedUser) {
-                _this3.currentUser = _this3.getCurrentUser();
-            }, function (error) {
-                alert('注册失败');
-                console.log(error);
-            });
-        },
-        login: function login() {
-            var _this4 = this;
-
-            _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
-                _this4.currentUser = _this4.getCurrentUser();
-                _this4.fetchTodos(); // 登陆成功后读取 todos
-            }, function (error) {
-                alert('登陆失败');
-                consolo.log(error);
-            });
-        },
-        getCurrentUser: function getCurrentUser() {
-            // let {id, createdAt, attributes: {username}} = AV.User.current();
-            // return {id, username, createdAt};
-
-            var current = _leancloudStorage2.default.User.current();
-
-            if (current) {
-                var id = current.id,
-                    createdAt = current.createdAt,
-                    username = current.attributes.username;
-
-
-                return { id: id, username: username, createdAt: createdAt };
-            } else {
-                return null;
-            }
-        },
-        logout: function logout() {
-            _leancloudStorage2.default.User.logOut();
-            this.currentUser = null;
-            window.location.reload();
-        }
-    }
-
-});
-
-/***/ },
-/* 1 */
 /***/ function(module, exports) {
 
 // shim for using process in browser
@@ -438,7 +253,7 @@ process.umask = function() { return 0; };
 
 
 /***/ },
-/* 2 */
+/* 1 */
 /***/ function(module, exports) {
 
 var g;
@@ -463,7 +278,7 @@ module.exports = g;
 
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, Buffer) {(function webpackUniversalModuleDefinition(root, factory) {
@@ -14522,10 +14337,10 @@ module.exports = AV;
 /******/ ]);
 });
 //# sourceMappingURL=av.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(5).Buffer))
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23045,10 +22860,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1)))
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23169,7 +22984,7 @@ function fromByteArray (uint8) {
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23183,9 +22998,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(5)
-var ieee754 = __webpack_require__(7)
-var isArray = __webpack_require__(8)
+var base64 = __webpack_require__(4)
+var ieee754 = __webpack_require__(6)
+var isArray = __webpack_require__(7)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -24963,10 +24778,10 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -25056,7 +24871,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 var toString = {}.toString;
@@ -25065,6 +24880,191 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(3);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _leancloudStorage = __webpack_require__(2);
+
+var _leancloudStorage2 = _interopRequireDefault(_leancloudStorage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//import bar from './bar';
+var APP_ID = '0p5CPSv97HgBjDmPRqTkJF5K-gzGzoHsz';
+var APP_KEY = '2PbwM4Qn9tax8D8uxExzPHhH';
+_leancloudStorage2.default.init({
+    appId: APP_ID,
+    appKey: APP_KEY
+});
+
+var app = new _vue2.default({
+    el: '#app',
+    data: {
+        //message: ' Hello World , this is Jack !'
+        actionType: 'signUp',
+        formData: {
+            username: '',
+            password: ''
+        },
+        newTodo: '',
+        todoList: [],
+        currentUser: null
+    },
+    created: function created() {
+        this.currentUser = this.getCurrentUser();
+        this.fetchTodos();
+
+        // window.onbeforeunload = ()=>{
+        //     let dataString = JSON.stringify(this.todoList); // 返回指定值的JSON
+        //     window.localStorage.setItem('myTodos', dataString);
+        //
+        //     var AVTodos = AV.Object.extend('AllTodos'),
+        //         avTodos = new AVTodos();
+        //
+        //     avTodos.set('content', dataString);
+        //     avTodos.save().then(function(todo){
+        //         console.log('保存成功')
+        //     }, function(error){
+        //         console.error('保存失败');
+        //     });
+        //     // debugger;
+        // }
+        //
+        // let oldDataString = window.localStorage.getItem('myTodos');
+        // let oldData = JSON.parse(oldDataString);
+        // this.todoList = oldData || [];
+        //
+        // this.currentUser = this.getCurrentUser();
+    },
+    methods: {
+        fetchTodos: function fetchTodos() {
+            var _this = this;
+
+            if (this.currentUser) {
+                var query = new _leancloudStorage2.default.Query('AllTodos');
+                query.find().then(function (todos) {
+                    var avAllTodos = todos[0]; //因为理论上 AllTodos 只有一个，所以我们取结果的第一项
+                    var id = avAllTodos.id;
+                    _this.todoList = JSON.parse(avAllTodos.attributes.content);
+                    _this.todoList.id = id; // 为什么给 todoList 这个数组设置 id？因为数组也是对象啊
+                }, function (error) {
+                    console.error(error);
+                });
+            }
+        },
+        updateTodos: function updateTodos() {
+            var dataString = JSON.stringify(this.todoList);
+            var avTodos = _leancloudStorage2.default.Object.createWithoutData('AllTodos', this.todoList.id);
+            avTodos.set('content', dataString);
+            avTodos.save().then(function () {
+                console.log('更新成功');
+            });
+        },
+        saveTodos: function saveTodos() {
+            var _this2 = this;
+
+            var dataString = JSON.stringify(this.todoList);
+            var AVTodos = _leancloudStorage2.default.Object.extend('AllTodos');
+            var avTodos = new AVTodos();
+            var acl = new _leancloudStorage2.default.ACL();
+            acl.setReadAccess(_leancloudStorage2.default.User.current(), true); // 只读
+            acl.setWriteAccess(_leancloudStorage2.default.User.current(), true); //只写
+
+
+            avTodos.set('content', dataString);
+            avTodos.setACL(acl); //设置访问控制
+            //avTodos.save().then(function(todo) {
+            avTodos.save().then(function (todo) {
+                _this2.todoList.id = todo.id; // 一定要记得把 id 挂到 this.todoList 上，否则下次就不会调用 updateTodos 了
+                // alert('保存成功');
+                console.log('保存成功');
+            }, function (error) {
+                alert('保存失败');
+            });
+            // })
+        },
+        saveOrUpdateTodos: function saveOrUpdateTodos() {
+            if (this.todoList.id) {
+                this.updateTodos();
+            } else {
+                this.saveTodos();
+            }
+        },
+        addTodo: function addTodo() {
+            this.todoList.push({
+                title: this.newTodo,
+                createdAt: new Date().toDateString(),
+                done: false //添加一个 done 属性
+            });
+            this.newTodo = '';
+            //console.log(this.todoList)
+            //this.saveTodos();
+            this.saveOrUpdateTodos(); //不能用 saveTodos 了
+        },
+        removeTodo: function removeTodo(todo) {
+            var idx = this.todoList.indexOf(todo);
+            this.todoList.splice(idx, 1); //splice 删除从 index 开始的X个元素并返回数组,第三个参数可以是替换和添加元素加进来
+            //this.saveTodos();
+            this.saveOrUpdateTodos(); // 不能用 saveTodos 了
+        },
+        signUp: function signUp() {
+            var _this3 = this;
+
+            var user = new _leancloudStorage2.default.User();
+            user.setUsername(this.formData.username);
+            user.setPassword(this.formData.password);
+            user.signUp().then(function (loginedUser) {
+                _this3.currentUser = _this3.getCurrentUser();
+            }, function (error) {
+                alert('注册失败');
+                console.log(error);
+            });
+        },
+        login: function login() {
+            var _this4 = this;
+
+            _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
+                _this4.currentUser = _this4.getCurrentUser();
+                _this4.fetchTodos(); // 登陆成功后读取 todos
+            }, function (error) {
+                alert('登陆失败');
+                console.log(error);
+            });
+        },
+        getCurrentUser: function getCurrentUser() {
+            // let {id, createdAt, attributes: {username}} = AV.User.current();
+            // return {id, username, createdAt};
+
+            var current = _leancloudStorage2.default.User.current();
+
+            if (current) {
+                var id = current.id,
+                    createdAt = current.createdAt,
+                    username = current.attributes.username;
+
+
+                return { id: id, username: username, createdAt: createdAt };
+            } else {
+                return null;
+            }
+        },
+        logout: function logout() {
+            _leancloudStorage2.default.User.logOut();
+            this.currentUser = null;
+            window.location.reload();
+        }
+    }
+
+});
 
 /***/ }
 /******/ ]);

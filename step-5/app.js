@@ -54,12 +54,12 @@ var app = new Vue({
             if(this.currentUser) {
                 var query = new AV.Query('AllTodos');
                 query.find()
-                    .then((todos)=>{
-                    let avAllTodos = todos[0]; //因为理论上 AllTodos 只有一个，所以我们取结果的第一项
-                    let id = avAllTodos.id;
-                    this.todoList = JSON.parse(avAllTodos.attributes.content);
-                    this.todoList.id = id;// 为什么给 todoList 这个数组设置 id？因为数组也是对象啊
-                },function(error){
+                    .then((todos) => {
+                        let avAllTodos = todos[0]; //因为理论上 AllTodos 只有一个，所以我们取结果的第一项
+                        let id = avAllTodos.id;
+                        this.todoList = JSON.parse(avAllTodos.attributes.content);
+                        this.todoList.id = id;// 为什么给 todoList 这个数组设置 id？因为数组也是对象啊
+                }, function(error){
                     console.error(error);
                 })
             }
@@ -70,7 +70,7 @@ var app = new Vue({
             avTodos.set('content', dataString);
             avTodos.save().then(()=>{
                 console.log('更新成功')
-            })
+            });
         },
         saveTodos: function(){
             let dataString = JSON.stringify(this.todoList);
@@ -108,14 +108,14 @@ var app = new Vue({
             });
             this.newTodo = '';
             //console.log(this.todoList)
-            this.saveTodos();
+            //this.saveTodos();
             this.saveOrUpdateTodos(); //不能用 saveTodos 了
         },
         removeTodo: function (todo) {
             let idx = this.todoList.indexOf(todo);
             this.todoList.splice(idx,1); //splice 删除从 index 开始的X个元素并返回数组,第三个参数可以是替换和添加元素加进来
-            this.saveTodos();
-            this.saveOrUpdateTodos() // 不能用 saveTodos 了
+            //this.saveTodos();
+            this.saveOrUpdateTodos();// 不能用 saveTodos 了
         },
         signUp: function(){
             let user = new AV.User();
@@ -130,12 +130,12 @@ var app = new Vue({
         },
         login: function(){
 
-            AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser)=>{
+            AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser) => {
                 this.currentUser = this.getCurrentUser();
                 this.fetchTodos(); // 登陆成功后读取 todos
         }, function(error){
                 alert('登陆失败');
-                consolo.log(error)
+                console.log(error)
             })
         },
         getCurrentUser: function(){
