@@ -24986,7 +24986,6 @@ var app = new _vue2.default({
 
             avTodos.set('content', dataString);
             avTodos.setACL(acl); //设置访问控制
-            //avTodos.save().then(function(todo) {
             avTodos.save().then(function (todo) {
                 _this2.todoList.id = todo.id; // 一定要记得把 id 挂到 this.todoList 上，否则下次就不会调用 updateTodos 了
                 // alert('保存成功');
@@ -24994,7 +24993,6 @@ var app = new _vue2.default({
             }, function (error) {
                 alert('保存失败');
             });
-            // })
         },
         saveOrUpdateTodos: function saveOrUpdateTodos() {
             if (this.todoList.id) {
@@ -25004,14 +25002,17 @@ var app = new _vue2.default({
             }
         },
         addTodo: function addTodo() {
+            if (this.newTodo === '') {
+                alert('输入内容不能为空');
+                return;
+            }
             this.todoList.push({
                 title: this.newTodo,
-                createdAt: new Date().toDateString(),
+                createdAt: this.formatTime(),
                 done: false //添加一个 done 属性
             });
             this.newTodo = '';
             //console.log(this.todoList)
-            //this.saveTodos();
             this.saveOrUpdateTodos(); //不能用 saveTodos 了
         },
         removeTodo: function removeTodo(todo) {
@@ -25019,6 +25020,23 @@ var app = new _vue2.default({
             this.todoList.splice(idx, 1); //splice 删除从 index 开始的X个元素并返回数组,第三个参数可以是替换和添加元素加进来
             //this.saveTodos();
             this.saveOrUpdateTodos(); // 不能用 saveTodos 了
+        },
+        formatTime: function formatTime() {
+            var dt = new Date(),
+                yy = dt.getFullYear(),
+                mm = dt.getMonth() + 1,
+                dd = dt.getDate(),
+                hh = dt.getHours(),
+                ms = dt.getMilliseconds(),
+                dtArr = [];
+            dtArr.push(yy, mm, dd, hh, ms);
+            for (var i = 0; i < dtArr.length; i++) {
+                if (dtArr[i] < 10) {
+                    dtArr[i] = '0' + dtArr[i];
+                }
+            }
+            var tpl = dtArr[0] + '年' + dtArr[1] + '月' + dtArr[2] + '日' + dtArr[3] + ':' + dtArr[4];
+            return tpl;
         },
         signUp: function signUp() {
             var _this3 = this;
