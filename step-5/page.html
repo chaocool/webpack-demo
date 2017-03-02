@@ -15,7 +15,7 @@
     <div class="signUp" v-if="actionType === 'signUp'">
         <form @submit.prevent="signUp">
             <div class="formRow">
-               <span class="username">用户名</span><input type="text" v-model="formData.username">
+               <span class="username">用户</span><input type="text" v-model="formData.username">
             </div>
             <div class="formRow">
                <span class="pwd">密码</span><input type="password" v-model="formData.password">
@@ -28,7 +28,7 @@
     <div class="login" v-if="actionType==='login'">
         <form @submit.prevent="login">
             <div class="formRow">
-                <span class="username">用户名</span><input type="text" v-model="formData.username">
+                <span class="username">用户</span><input type="text" v-model="formData.username">
             </div>
             <div class="formRow">
                 <span class="pwd">密码</span><input type="password" v-model="formData.password">
