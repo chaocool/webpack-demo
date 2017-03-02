@@ -1,9 +1,11 @@
 //import bar from './bar';
 import Vue from 'vue'
 import AV from 'leancloud-storage'
+// import style from './style.css'
 
 var APP_ID = '0p5CPSv97HgBjDmPRqTkJF5K-gzGzoHsz';
 var APP_KEY = '2PbwM4Qn9tax8D8uxExzPHhH';
+
 AV.init({
     appId: APP_ID,
     appKey: APP_KEY

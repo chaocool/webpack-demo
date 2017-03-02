@@ -1,0 +1,35 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1487646554106'); /* IE9*/
+  src: url('iconfont.eot?t=1487646554106#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1487646554106') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1487646554106') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1487646554106#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-github11:before { content: "\e7ab"; }
+
+.icon-up:before { content: "\e614"; }
+
+.icon-weixin:before { content: "\e615"; }
+
+.icon-yinhao:before { content: "\e61d"; }
+
+.icon-link:before { content: "\e67a"; }
+
+.icon-pdf:before { content: "\e60f"; }
+
+.icon-rss:before { content: "\e6c8"; }
+
+.icon-call:before { content: "\e610"; }
+
+.icon-mail:before { content: "\e774"; }
+

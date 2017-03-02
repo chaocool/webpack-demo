@@ -1,56 +1,24 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            font-size: 16px;
-        }
-        body{background-color: aquamarine;}
-        #app{
-            width: 600px;
-            margin: 50px auto;
-
-        }
-        .newTask{
-            padding: 10px 0;
-        }
-        .newTask input{
-            width: 600px;
-            height: 50px;
-        }
-        .todos *{
-            padding: 6px;
-        }
-        button{
-            background-color: none;
-            font-size: 14px;
-            outline: none;
-            border: none;
-            padding: 0;
-        }
-        button:hover{
-            background: #ccc;
-            border: none;
-            color: yellow;
-        }
-    </style>
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <div id="app">
     <section id="signInAndSignUp" v-if="!currentUser">
-        <div>
+        <h1>待办事项</h1>
+        <div class="sign-login">
             <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
             <label><input type="radio" name="type" v-model="actionType" value="login">登入</label>
         </div>
         <div class="signUp" v-if="actionType === 'signUp'">
             <form @submit.prevent="signUp">
                 <div class="formRow">
-                    用户名<input type="text" v-model="formData.username">
+                   <span class="username">用户名</span><input type="text" v-model="formData.username">
                 </div>
                 <div class="formRow">
-                    密码<input type="password" v-model="formData.password">
+                   <span class="pwd">密码</span><input type="password" v-model="formData.password">
                 </div>
                 <div class="formActions">
                     <input type="submit" value="注册">
@@ -60,10 +28,10 @@
         <div class="login" v-if="actionType==='login'">
             <form @submit.prevent="login">
                 <div class="formRow">
-                    用户名<input type="text" v-model="formData.username">
+                    <span class="username">用户名</span><input type="text" v-model="formData.username">
                 </div>
                 <div class="formRow">
-                    密码<input type="password" v-model="formData.password">
+                    <span class="pwd">密码</span><input type="password" v-model="formData.password">
                 </div>
                 <div class="formActions">
                     <input type="submit" value="登入">

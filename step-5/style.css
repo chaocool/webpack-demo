@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI",
+                "Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+}
+body{
+    /*background-color: #2c2e2c;*/
+    background: rgba(10, 6, 6,0.75);
+    width: 100%;
+}
+#app{
+    width: 50%;
+    height: 300px;
+    margin: 10% auto;
+    text-align: center;
+    line-height: 2rem;
+
+}
+#signInAndSignUp > h1{
+    padding-bottom:2rem;
+}
+.sign-login{
+    color: yellowgreen;
+}
+.sign-login > label{
+    padding: 0 1rem;
+}
+
+#app .signUp .formRow{
+    padding: 0 1rem;
+}
+#app .signUp .formRow input{
+    margin: 0 0.5rem;
+}
+.login .formRow input{
+    margin: 0 0.5rem;
+}
+.login .username , .login .pwd, .signUp .username , .signUp .pwd{
+    color: white;
+}
+
+
+.newTask{
+    padding: 10px 0;
+}
+.newTask input{
+    width: 600px;
+    height: 50px;
+}
+.todos *{
+    padding: 6px;
+}
+button{
+    background-color: none;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    padding: 0;
+}
+button:hover{
+    background: #ccc;
+    border: none;
+    color: yellow;
+}
+#signInAndSignUp h1{
+    color: #ffffff;
+    font-size: 48px;
+}
